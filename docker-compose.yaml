@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - "443:80"
+  mariadb:
+    image: mariadb
+    volumes:
+      - /home/berthetthomas/data/DB
+    restart: always
+    ports:
+      - "3306:80"
+    #environment:
+  wordpress:
+    depends_on: 
+      - mariadb
+    image: wordpress
+    ports:
+      - "9000:80"
+    restart: always
+    volumes:
+      - /home/thoberth/data/WordPress
