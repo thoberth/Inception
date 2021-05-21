@@ -5,21 +5,21 @@ services:
     image: nginx
     restart: always
     ports:
-      - "443:80"
+      - "443:443"
   mariadb:
     image: mariadb
     volumes:
       - /home/berthetthomas/data/DB
     restart: always
     ports:
-      - "3306:80"
+      - "3306:3306"
     #environment:
   wordpress:
-    depends_on: 
+    depends_on:
       - mariadb
     image: wordpress
     ports:
-      - "9000:80"
+      - "9000:9000"
     restart: always
     volumes:
-      - /home/thoberth/data/WordPress
+      - /home/berthetthomas/data/WordPress
