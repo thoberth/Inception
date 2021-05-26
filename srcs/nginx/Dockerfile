@@ -2,12 +2,17 @@ FROM debian:buster
 
 RUN	apt-get update \
     && apt-get upgrade -y \
+	&& apt-get install openssl -y \
     && apt-get install vim -y \
     && apt-get install nginx -y \
-	&& mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.origin
+	&& mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.origin \
+	&& mkdir -p /etc/nginx/ssl/ \
+	&& openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=FR/ST=Ile de France/L=Paris/O=42/OU=Inception/CN=thoberth.42.fr" 
 
-COPY    srcs/nginx/thoberth.42.fr /etc/nginx/sites-available/ \
-		srcs/nginx/nginx.conf etc/nginx/
+COPY	thoberth.42.fr.conf	/etc/nginx/sites-available/
+COPY	nginx.conf	etc/nginx/
 RUN     ln -s  /etc/nginx/sites-available/thoberth.42.fr.conf /etc/nginx/sites-enabled/
+
+EXPOSE 443
 
 CMD nginx -g "daemon off;" && service nginx start

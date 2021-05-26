@@ -1,25 +1,42 @@
 version: '3'
-
 services:
+### NGINX ###
   nginx:
     image: nginx
+    links:
+      - wordpress
     restart: always
     ports:
       - "443:443"
+### MARIADB ###
   mariadb:
     image: mariadb
     volumes:
-      - /home/berthetthomas/data/DB
+      - /home/berthetthomas/data/DB:/var/lib/mariadb
     restart: always
     ports:
       - "3306:3306"
-    #environment:
+    environment:
+      MYSQL_ROOT_PASSWORD: $MDB_RPW
+      MYSQL_DATABASE: $MDB_NAME
+      MYSQL_USER: $MDB_USER
+      MYSQL_PASSWORD: $MDB_PW
+### WORDPRESS###
   wordpress:
+    image: wordpress
     depends_on:
       - mariadb
-    image: wordpress
+    links:
+      - mariadb
+    volumes:
+      - /home/berthetthomas/data/WordPress:/var/www/html
+    restart: always
     ports:
       - "9000:9000"
-    restart: always
-    volumes:
-      - /home/berthetthomas/data/WordPress
+    environment:
+      WORDPRESS_DB_HOST: $WP_DB_HOST
+      MYSQL_ROOT_PASSWORD: $MDB_RPW
+      WORDPRESS_DB_NAME: $MDB_NAME
+      WORDPRESS_DB_USER: $WP_DB_USER
+      WORDPRESS_DB_PASSWORD: $WP_DB_PW
+      WORDPRESS_TABLE_PREFIX: $WP_TP
