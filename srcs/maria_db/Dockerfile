@@ -3,8 +3,9 @@ FROM debian:buster
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install vim -y \
-	&& apt-get install mariadb-server -y
+	&& apt-get install mariadb-server -y \
+	&& mkdir -p /var/run/mysqld/
 
-COPY	create_db.sh /tmp/
+COPY create_db.sh /bin/
 
-ENTRYPOINT sh tmp/create_db.sh
+CMD etc/init.d/mysql start && sh /bin/create_db.sh && etc/init.d/mysql restart
