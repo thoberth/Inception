@@ -12,9 +12,9 @@
 
 RM_IMAGES = docker rmi -f $(shell docker images -q)
 
-LAUNCH_DOCKER_COMPOSE = docker-compose --env-file srcs/.env up --build
+LAUNCH_DOCKER_COMPOSE = docker-compose up --build
 
-STOP_DOCKER_COMPOSE = docker-compose --env-file srcs/.env down
+STOP_DOCKER_COMPOSE = docker-compose down
 
 all:
 	${LAUNCH_DOCKER_COMPOSE}

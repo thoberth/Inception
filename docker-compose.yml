@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+### NGINX ###
+  nginx:
+    build: srcs/nginx
+    depends_on:
+      - wordpress
+    restart: always
+    ports:
+      - "443:443"
+    networks:
+      - inception
+### MARIADB ###
+  mariadb:
+    build: srcs/maria_db
+    volumes:
+      - /home/thoberth/data/DB:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306:443"
+    env_file:
+      - "srcs/.env"
+    networks:
+      - inception
+### WORDPRESS ###
+  wordpress:
+    build: srcs/wordpress
+    depends_on:
+      - mariadb
+    volumes:
+      - /home/thoberth/data/WordPress:/var/www/html
+    restart: always
+    ports:
+      - "9000:443"
+    env_file:
+      - "srcs/.env"
+    networks:
+      - inception
+
+networks:
+  inception:
