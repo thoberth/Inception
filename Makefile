@@ -26,5 +26,5 @@ clean:
 	${RM_IMAGES}
 
 re: clean down all
-	
+
 .PHONY:	all down clean re
