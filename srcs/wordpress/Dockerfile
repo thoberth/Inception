@@ -8,4 +8,4 @@ RUN apt-get update \
 	&& mkdir -p /run/php/
 
 
-CMD php-fpm7.3 -F
+CMD exec php-fpm7.3 -F

@@ -3,11 +3,17 @@ FROM debian:buster
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install vim -y \
-	&& apt-get install mariadb-server mariadb-client gnupg -y \
-	&& mkdir -p /var/run/mysql
+	&& apt-get install mariadb-server procps net-tools -y
 
 COPY create_db.sh /bin/
+COPY my.cnf /etc/mysql/my.cnf
+
+RUN rm -rf /var/lib/mysql/*
+RUN mkdir -p /var/run/mysql/
+RUN chmod 775 /bin/create_db.sh
+RUN chmod 775 /etc/mysql/my.cnf
+RUN chmod 775 /var/lib/mysql
 
 EXPOSE 3306
 
-CMD sh bin/create_db.sh && mysqld_safe
+ENTRYPOINT bin/create_db.sh
