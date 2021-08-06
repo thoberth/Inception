@@ -18,14 +18,14 @@ STOP_DOCKER_COMPOSE = docker-compose down
 
 VOL_DIR = /home/thoberth/data
 
-volumes :
-			sudo sed -i '1 i\127.0.0.1\thoberth.42.fr' /etc/hosts
-			sudo userdel www-data && sudo useradd -u 82 www-data
-        	sudo mkdir -p $(VOL_DIR)/database && sudo chown -R mysql:mysql $(VOL_DIR)/database
-            sudo mkdir -p $(VOL_DIR)/wp && sudo chown -R www-data:www-data $(VOL_DIR)/wp
-
 all:	volumes
 	${LAUNCH_DOCKER_COMPOSE}
+
+volumes:
+	sudo sed -i '1 i\127.0.0.1\thoberth.42.fr' /etc/hosts
+	sudo userdel www-data && sudo useradd -u 82 www-data
+	sudo mkdir -p $(VOL_DIR)/database && sudo chown -R mysql:mysql $(VOL_DIR)/database
+	sudo mkdir -p $(VOL_DIR)/wp && sudo chown -R www-data:www-data $(VOL_DIR)/wp
 
 down:
 	${STOP_DOCKER_COMPOSE}

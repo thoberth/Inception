@@ -8,8 +8,6 @@ RUN apt-get update \
 COPY create_db.sh /bin/
 COPY my.cnf /etc/mysql/my.cnf
 
-RUN rm -rf /var/lib/mysql/*
-RUN mkdir -p /var/run/mysql/
 RUN chmod 775 /bin/create_db.sh
 RUN chmod 775 /etc/mysql/my.cnf
 RUN chmod 775 /var/lib/mysql

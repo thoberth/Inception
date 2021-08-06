@@ -4,12 +4,14 @@
 #export MYSQL_PASSWORD=@123toto
 
 mysqld_safe &
-
-sleep 10
-
+echo "db initialised"
+echo "wait 15s"
+sleep 15
+echo "ajout de la db"
 mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
 mysql -e "GRANT ALL ON db.* TO ${MYSQL_USER}@${DOMAIN_NAME} IDENTIFIED BY '${MYSQL_PASSWORD}';"
 mysql -e "FLUSH PRIVILEGES;"
-
+echo "database shutdown"
 mysqladmin shutdown
-exec mysqld -u root --datadir=/var/lib/mysql
+echo "database restarting"
+exec mysqld -u root 

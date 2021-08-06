@@ -1,8 +1,9 @@
-version: '3'
+version: "3"
 
 services:
 ### NGINX ###
   nginx:
+    container_name: nginx
     build: srcs/nginx
     depends_on:
       - wordpress
@@ -13,9 +14,10 @@ services:
       - inception
 ### MARIADB ###
   mariadb:
+    container_name: mariadb
     build: srcs/maria_db
     volumes:
-      - /home/thoberth/data/DB:/var/lib/mysql
+      - /home/thoberth/data/database:/var/lib/mysql
     restart: always
     ports:
       - "3306"
@@ -25,11 +27,12 @@ services:
       - inception
 ### WORDPRESS ###
   wordpress:
+    container_name: wp-php7.3
     build: srcs/wordpress
     depends_on:
       - mariadb
     volumes:
-      - /home/thoberth/data/WordPress:/var/www/html
+      - /home/thoberth/data/wp:/var/www/html
     restart: always
     ports:
       - "9000"
