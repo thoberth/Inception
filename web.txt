@@ -1,4 +1,0 @@
-https://openclassrooms.com/fr/courses/4425101-deployez-une-application-django/4688553-utilisez-le-serveur-http-nginx
-https://code.uni-deal.com/techniques/linux/62-mysql-commandes-utiles.html
-https://stackoverflow.com/questions/56190169/how-can-i-use-an-environment-variable-in-the-mysql-console
-https://www.monvps.fr/mariadb-creer-une-base-de-donnee-et-un-utilisateur-en-ligne-de-commande/

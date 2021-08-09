@@ -15,4 +15,4 @@ RUN     ln -s  /etc/nginx/sites-available/thoberth.42.fr.conf /etc/nginx/sites-e
 
 EXPOSE 443
 
-CMD nginx -g "daemon off;" && service nginx start
+CMD nginx -g "daemon off;"
