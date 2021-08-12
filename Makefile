@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-RM_IMAGES = docker rmi -f $(shell docker images -q)
+RM_IMAGES = docker rmi -f $(shell docker images -q) && docker rm $(shell docker ps -a -q)
 
 LAUNCH_DOCKER_COMPOSE = docker-compose -f ./srcs/docker-compose.yml up --build -d
 
