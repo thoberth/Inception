@@ -11,8 +11,11 @@ RUN	apt-get update \
 
 COPY	thoberth.42.fr.conf	/etc/nginx/sites-available/
 COPY	nginx.conf	etc/nginx/
-RUN     ln -s  /etc/nginx/sites-available/thoberth.42.fr.conf /etc/nginx/sites-enabled/
+COPY 	start-nginx.sh /bin/
+RUN     ln -s  /etc/nginx/sites-available/thoberth.42.fr.conf /etc/nginx/sites-enabled/thoberth.42.fr.conf \
+		&& chmod 775 /bin/start-nginx.sh \
+		&& chown -R www-data:www-data /var/www
 
 EXPOSE 443
 
-CMD nginx -g "daemon off;"
+ENTRYPOINT [ "/bin/start-nginx.sh" ]

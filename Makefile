@@ -12,9 +12,9 @@
 
 RM_IMAGES = docker rmi -f $(shell docker images -q)
 
-LAUNCH_DOCKER_COMPOSE = docker-compose up --build
+LAUNCH_DOCKER_COMPOSE = docker-compose -f ./srcs/docker-compose.yml up --build -d
 
-STOP_DOCKER_COMPOSE = docker-compose down
+STOP_DOCKER_COMPOSE = docker-compose -f ./srcs/docker-compose.yml down
 
 VOL_DIR = /home/thoberth/data
 
@@ -22,7 +22,7 @@ all:	volumes
 	${LAUNCH_DOCKER_COMPOSE}
 
 volumes:
-	sudo sed -i '1 i\127.0.0.1\thoberth.42.fr' /etc/hosts
+	sudo sed -i '1 i\127.0.0.1\tthoberth.42.fr' /etc/hosts
 	sudo userdel www-data && sudo useradd -u 82 www-data
 	sudo mkdir -p $(VOL_DIR)/database && sudo chown -R mysql:mysql $(VOL_DIR)/database
 	sudo mkdir -p $(VOL_DIR)/wp && sudo chown -R www-data:www-data $(VOL_DIR)/wp

@@ -4,42 +4,42 @@ services:
 ### NGINX ###
   nginx:
     container_name: nginx
-    build: srcs/nginx
+    build: ./nginx
     depends_on:
       - wordpress
     volumes:
-      - wp:/var/www/worpress
-    restart: always
+      - wp:/var/www/wordpress
+    restart: on-failure
     ports:
-      - "443:443"
+      - "127.0.0.1:443:443"
     networks:
       - inception
 ### MARIADB ###
   mariadb:
     container_name: mariadb
-    build: srcs/maria_db
+    build: ./maria_db
     volumes:
       - database:/var/lib/mysql
-    restart: always
+    restart: on-failure
     ports:
       - "3306"
     env_file:
-      - "srcs/.env"
+      - "./.env"
     networks:
       - inception
 ### WORDPRESS ###
   wordpress:
     container_name: wp-php7.3
-    build: srcs/wordpress
+    build: ./wordpress
     depends_on:
       - mariadb
     volumes:
       - wp:/var/www/wordpress
-    restart: always
+    restart: on-failure
     ports:
       - "9000"
     env_file:
-      - "srcs/.env"
+      - "./.env"
     networks:
       - inception
 

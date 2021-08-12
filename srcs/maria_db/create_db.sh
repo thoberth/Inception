@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo "initialization of database"
-sleep 2
 
 mysqld_safe &
+sleep 2
 
 echo "wait 15s"
 sleep 15
@@ -11,7 +11,9 @@ sleep 15
 echo "ajout de la db"
 sleep 2
 mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
-mysql -e "GRANT ALL ON db.* TO ${MYSQL_USER}@${DOMAIN_NAME} IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mysql -e "CREATE USER IF NOT EXISTS ${WP_DB_USER}@'%' IDENTIFIED BY '${WP_DB_PW}';"
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO ${WP_ADMIN}@'%' IDENTIFIED BY '${WP_ADMIN_PW}';"
+mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${WP_DB_USER}@'%';"
 mysql -e "FLUSH PRIVILEGES;"
 
 echo "database shutdown"
@@ -20,4 +22,5 @@ mysqladmin shutdown
 
 echo "database restarting"
 sleep 2
-exec mysqld -u root 
+
+exec mysqld -u root

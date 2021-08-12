@@ -14,4 +14,4 @@ RUN chmod 775 /var/lib/mysql
 
 EXPOSE 3306
 
-ENTRYPOINT bin/create_db.sh
+ENTRYPOINT [ "bin/create_db.sh" ]
